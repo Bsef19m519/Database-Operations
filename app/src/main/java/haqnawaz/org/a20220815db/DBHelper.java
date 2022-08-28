@@ -54,6 +54,26 @@ public class DBHelper extends SQLiteOpenHelper {
         //if (insert == -1) { return false; }
         //else{return true;}
     }
+    public void  updateStudent(StudentModel studentModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        //Hash map, as we did in bundles
+        ContentValues cv = new ContentValues();
+
+        cv.put(STUDENT_NAME, studentModel.getName());
+        cv.put(STUDENT_ROLL, studentModel.getRollNmber());
+        cv.put(STUDENT_ENROLL, studentModel.isEnroll());
+        db.update(STUDENT_TABLE, cv,STUDENT_ID + "="+studentModel.getId(),null);
+        db.close();
+        //NullCoumnHack
+        //long insert =
+        //if (insert == -1) { return false; }
+        //else{return true;}
+    }
+    public void deleteStudent(StudentModel studentModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(STUDENT_TABLE,STUDENT_ID + "="+studentModel.getId(),null);
+        db.close();
+    }
 
     public ArrayList<StudentModel> getAllStudents() {
 
@@ -67,7 +87,8 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursorCourses.moveToFirst()) {
             do {
 
-                studentArrayList.add(new StudentModel(cursorCourses.getString(1),
+                studentArrayList.add(new StudentModel(cursorCourses.getInt(0),
+                        cursorCourses.getString(1),
                         cursorCourses.getInt(2),
                         cursorCourses.getInt(3) == 1 ? true : false));
             } while (cursorCourses.moveToNext());

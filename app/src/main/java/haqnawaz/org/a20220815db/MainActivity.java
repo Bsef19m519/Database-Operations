@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -53,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DBHelper dbHelper = new DBHelper(MainActivity.this);
                 List<StudentModel> list = dbHelper.getAllStudents();
-                ArrayAdapter arrayAdapter = new ArrayAdapter<StudentModel>
-                        (MainActivity.this, android.R.layout.simple_list_item_1,list);
-                listViewStudent.setAdapter(arrayAdapter);
+//                ArrayAdapter arrayAdapter = new ArrayAdapter<StudentModel>
+//                        (MainActivity.this, android.R.layout.simple_list_item_1,list);
+                MyAdapter myAdapter = new MyAdapter(MainActivity.this, list);
+                listViewStudent.setAdapter(myAdapter);
 
             }
         });
